@@ -1,5 +1,5 @@
 ---
-title: About Alembic
+title: About This Project
 feature_text: |
   ## Alembic
   A Jekyll boilerplate theme designed to be a starting point for any Jekyll website
@@ -13,6 +13,7 @@ Alembic is a starting point for [Jekyll](https://jekyllrb.com/) projects. Rather
 
 ## Features
 
+- This is a test text snippet to see the effect of what I do
 - Available as a **theme gem** and **GitHub Pages** theme
 - Clear and elegant design that can be used out of the box or as solid starting point
 - Tested in all major browsers, including **IE and Edge**

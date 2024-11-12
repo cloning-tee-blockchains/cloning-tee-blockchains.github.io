@@ -4,7 +4,7 @@ feature_text: |
   # The Forking Way
   ### When TEE meets Consensus
 excerpt: "Overview of forking attacks against TEE-based blockchains"
-aside: true
+aside: false
 paperlink: true
 ---
 
@@ -110,8 +110,12 @@ non-deterministic.
 
 We demonstrate the impact of forking attacks against the enclave in TEE-based blockchains with three case studies. For our case studies, we chose three (almost) production-ready systems: [Phala](https://phala.network/), [Ten](https://ten.xyz/), and [Secret Network](https://scrt.network/).
 
+- **Phala:** Phala is an L1 blockchain leveraging TEEs for off-chain confidential smart contract execution. By cloning the enclave, an adversary can isolate the cloned instance from the network and provide rogue responses to contract queries.
+- **Secret Network:**
+- **Ten:** 
 
 
+Explore the details of these three attacks [here](/case_studies/).
 
 
 ### Authors
@@ -126,4 +130,4 @@ Claudio Soriente\
 
 
 ### Responsible Disclosure
-We responsibly disclosed our findings on July 10, 2024 to Phala, Ten and the Secret Network, and suggested countermeasures to the developers of these production-ready TEE-based blockchains, respectively.
+We responsibly disclosed our findings on July 10, 2024 to Phala, Ten and the Secret Network, and suggested countermeasures to the developers of these production-ready TEE-based blockchains, respectively. While Ten acknowledged the issue, we still await responses from Phala and the Secret Network.  

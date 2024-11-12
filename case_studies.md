@@ -4,7 +4,7 @@ feature_text: |
   # Case Studies
   ### Forking TEE-based Blockchains in the Wild
 excerpt: "Case studies demonstrating the impact of forking attacks against TEE-based blockchains"
-aside: true
+aside: false
 ---
 
 
@@ -22,68 +22,33 @@ As each smart contract is only executed by one enclave, Phala’s worker nodes u
 
 While heartbeats contain the block height (and, as such, could be used for timestamping), enclaves do not check whether they receive regular heartbeats (or acknowledgments) from others. This check is only done by the Gatekeeper, which allows enclaves to be cloned and even isolated from the rest of the network.
 
-Contract queries in Phala are encrypted with an ephemeral symmetric key. Among other information, the encrypted query contains the smart contract address and the raw contract query. An adversary 
+Phala contract queries are encrypted with a temporary symmetric key, which includes the contract’s address and the raw query. Imagine a simple scenario: a smart contract with address *a* has a boolean variable initially set to *False*. After processing a transaction *tx*, the variable changes to *True*, so that any query to address a should now return *True*. 
 
-<div style="center">
+However, an adversary could clone the enclave and disable the *pherry relayer* connecting it to the blockchain, isolating this clone. Without transaction *tx*, the isolated clone retains *False* as its state. If a client sends a query to the smart contract at address *a* (step 1 in the figure below), the adversary could forward the request to the isolated clone (step 2), which decrypts the query and responds with *False* (step 3), thus delivering outdated information.
+
 ![Overview of the cloning attack against Phala Worker enclaves.](/assets/figures/attack_phala.png "Sketch of the cloning attack on Phala. A malicious worker clones the enclave running the smart contract. It then prevents the clone from receiving state updates and answers contract queries with an outdated state.")
-</div>
-```
-Test
-```
-Given the above setting, an adversary can operate two
-instances of the pruntime and freely choose the instance to
-answer a request. The attack is depicted in Figure 10 in
-Appendix C. We assume a simple contract with address a
-using a single boolean variable as state, initialized to False.
-At a certain point, a transaction tx causes the boolean variable
-to be set to True. From this moment, clients issuing contract
-queries to the contract at address a should receive True as a
-response. However, assume that the adversary creates a clone
-of the pruntime. The adversary does not start a pherry relayer
-for the clone, effectively isolating it from the network. The first
-instance is still connected to the network and issues regular
-heartbeats. As the cloned pruntime did not receive tx (it is
-isolated from the network), its internal state remains False. At
-this stage, a client issues a contract query (step 1 ) to the smart
-contract at address a. The adversary forwards the request to
-the isolated pruntime instance (step 2 ), which decrypts the
-query and provides False as a response to the client (step 3 ).
 
 
 #### Suggested Countermeasure
-Heartbeats in Phala offer a
-good opportunity to integrate a timestamping mechanism that
-allows enclaves to self-detect forking attacks: (1) they are
-authenticated by the enclaves, (2) they contain the block
-height, and (3) they are sent regularly every 45 seconds. We
-suggest leveraging those heartbeat messages to ensure that all
-enclaves are aware of the current block height (and hence the
-current state). To this end, we suggest that enclaves exchange
-heartbeats via a separate P2P network and check that they
-regularly receive heartbeat messages from others (i.e., they
-are not eclipsed). A major challenge with this approach lies in
-Limitation 6 (existential honesty): enclaves need to ensure they
-are connected to at least one honest node to get the latest state
-from the network (and reflect it in their heartbeat messages).
-This, alone, however, is not sufficient to deter forking
-attacks. Here, we suggest that the enclaves include the latest
-block height as a timestamp in responses to all contract
-queries (as suggested in the whitepaper [13]). This burdens the
-requesting client to determine whether the output corresponds
-to a fresh state and is, therefore, valid. In case Phala opts to
-support randomized contract execution, we suggest the reliance
-on ephemeral IDs (cf. Limitation 8) as well.
+
+Phala’s heartbeat mechanism presents a valuable opportunity to add a timestamping feature that could help enclaves to self-detect forking attacks. By leveraging heartbeats, all enclaves could stay synchronized with the current block height, reflecting the most recent state. Our suggestion is to have enclaves exchange these heartbeats over a dedicated peer-to-peer (P2P) network, ensuring they regularly receive heartbeat messages from others and can detect if they become isolated.
+
+Additionally, we recommend that enclaves include the latest block height as a timestamp in their responses to all contract queries. This approach shifts some responsibility to the requesting client, who would need to verify that the output matches the latest state and is, therefore, valid.
 
 
 #### Responsible Disclosure
+
+On July 10, 2024, we responsibly disclosed our findings to Phala and provided the developers of Ten with suggested countermeasures. As of now, we have not received an acknowledgment of the vulnerability from Phala.
 
 ---
 
 ### Secret Network
 
-[Secret Network](https://scrt.network/)
+The [Secret Network](https://scrt.network/) (SN) is a Layer 1 blockchain built on the Cosmos SDK. In SN, each node leverages a Trusted Execution Environment (TEE) to securely execute smart contracts. When a transaction is sent to invoke a smart contract, it’s encrypted using a public key shared across the network, allowing any SN enclave to decrypt and process it. Once selected for inclusion in the next block, the transaction is decrypted, executed within the enclave, and its output is re-encrypted with the sender's public key before being added to the blockchain. To facilitate quick and gas-free access to contract state, SN enclaves offer an HTTP endpoint that clients can use to directly query smart contract data.
 
 #### Responsible Disclosure
+
+On July 10, 2024, we responsibly disclosed our findings to the Secret Network and provided its developers with suggested countermeasures. As of now, we have not received an acknowledgment of the vulnerability from the Secret Network.
 
 ---
 
@@ -93,4 +58,4 @@ on ephemeral IDs (cf. Limitation 8) as well.
 
 #### Responsible Disclosure
 
-We responsibly disclosed our findings to Ten on July 10, 2024, and suggested our countermeasures to the developers of Ten.
+On July 10, 2024, we responsibly disclosed our findings to Ten and provided the developers of Ten with suggested countermeasures. Ten acknowledged the vulnerability as a potential attack vector.

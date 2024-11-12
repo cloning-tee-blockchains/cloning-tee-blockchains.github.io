@@ -1,5 +1,6 @@
 {% assign feature_text = page.feature_text %}
 {% assign feature_image = page.feature_image %}
+{% assign feature_paperlink = page.paperlink %}
 {% if page.collectionpage %}
   {% assign collectiondata = site.collections | where: "label", page.collectionpage | first %}
   {% assign feature_text = collectiondata.feature_text %}
@@ -10,6 +11,10 @@
   <div class="feature"{% if feature_image %} style="background-image: url({{ feature_image }})"{% endif %}>
     <div class="container  typeset">
       {{ feature_text | markdownify }}
+
+      <p style="margin-top: 30px">
+        {% if feature_paperlink %}{% include button.html text="Paper" link="https://arxiv.org/pdf/2310.03002" color="#808080" %}{% endif %}
+      </p>
     </div>
   </div>
 {% endif %}

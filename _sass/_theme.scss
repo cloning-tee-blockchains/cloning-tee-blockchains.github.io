@@ -313,6 +313,8 @@ button,
 .button {
   cursor: pointer;
   display: inline-block;
+  border-radius: 30px;
+  width: 200px;
   color: $backgroundColour;
   background: $accentColour;
   transition: box-shadow .1s;
@@ -454,4 +456,14 @@ pre code {
     white-space: pre;
     overflow-x: scroll;
   }
+}
+
+
+.boxed {
+  background: #F2F2F2;
+  color: black;
+  border: 3px solid #535353;
+  margin: 0px auto;
+  padding: 10px;
+  border-radius: 10px;
 }

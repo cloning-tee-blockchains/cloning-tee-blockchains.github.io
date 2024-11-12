@@ -121,22 +121,18 @@ favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
 
 # 9. Site navigation
 navigation_header:
-- title: Home
+- title: The Forking Way
   url: /
-- title: TestChange
-  url: /elements/
-- title: Blog
-  url: /blog/
-- title: Categories
-  url: /categories/
+- title: TEE-based Blockchains
+  url: /tee_blockchains/
+- title: Case Studies
+  url: /case_studies/
 - title: Search
   url: /search/
-- title: Fork Alembic
-  url: https://github.com/daviddarnes/alembic
 
 navigation_footer:
-- title: Created by David Darnes
-  url: https://darn.es
+- title: Imprint
+  url: /imprint/
 
 social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
   Twitter: https://twitter.com/DavidDarnes

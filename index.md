@@ -1,94 +1,129 @@
 ---
-title: About This Project
+title: The Forking Way
 feature_text: |
-  ## Alembic
-  A Jekyll boilerplate theme designed to be a starting point for any Jekyll website
-feature_image: "https://picsum.photos/1300/400?image=989"
-excerpt: "Alembic is a starting point for [Jekyll](https://jekyllrb.com/) projects. Rather than starting from scratch, this boilerplate is designed to get the ball rolling immediately. Install it, configure it, tweak it, push it."
+  # The Forking Way
+  ### When TEE meets Consensus
+excerpt: "Overview of forking attacks against TEE-based blockchains"
+aside: true
+paperlink: true
 ---
 
-Alembic is a starting point for [Jekyll](https://jekyllrb.com/) projects. Rather than starting from scratch, this boilerplate is designed to get rolling immediately. Install it, configure it, tweak it, push it.
+### What are TEE-based Blokchains?
 
-{% include button.html text="Fork it" icon="github" link="https://github.com/daviddarnes/alembic" color="#0366d6" %} {% include button.html text="Buy me a coffee ☕️" link="https://buymeacoffee.com/daviddarnes#support" color="#f68140" %} {% include button.html text="Tweet it" icon="twitter" link="https://twitter.com/intent/tweet/?url=https://alembic.darn.es&text=Alembic%20-%20A%20Jekyll%20boilerplate%20theme&via=DavidDarnes" color="#0d94e7" %} {% include button.html text="Install Alembic ⚗️" link="https://github.com/daviddarnes/alembic#installation" %}
+TEE-based blockchains are blockchain networks that incorporate **Trusted Execution Environments (TEEs)** to enhance data privacy, reduce communication complexity, and boost scalability. In traditional blockchains, decentralized systems achieve consistency among nodes through a Layer One (L1) consensus protocol. This protocol ensures that the majority of (honest) nodes agree on a shared state by requiring all state data and updates to be publicly accessible so that nodes can validate the current state.
 
-## Features
+**The Role of TEEs:** 
+Trusted Execution Environments (TEEs) provide a secure hardware-based layer that protects sensitive computations. By creating an isolated sandbox, or *enclave*, TEEs prevent unauthorized access to runtime memory and ensure that only verified code is executed. This secure environment allows TEE-based blockchains to offer state confidentiality while minimizing the data exchange requirements and enhancing scalability.
 
-- This is a test text snippet to see the effect of what I do
-- Available as a **theme gem** and **GitHub Pages** theme
-- Clear and elegant design that can be used out of the box or as solid starting point
-- Tested in all major browsers, including **IE and Edge**
-- Built in **Service Worker** so it can work offline and on slow connections
-- **Configurable colours** and typography in a single settings file
-- Extensive set of **shortcodes** to include various elements; such as buttons, icons, figure images and more
-- Solid **typographic framework** from [Sassline](https://sassline.com/)
-- Configurable navigation via a single file
-- Modular Jekyll components
-- Post category support in the form of a single post index page grouped by category
-- Built in live search using JavaScript
-- **Contact form** built in using [Formspree](https://formspree.io/)
-- Designed with **[Siteleaf](https://www.siteleaf.com/)** in mind
-- Has 9 of the most popular networks as performant sharing buttons
-- Has documentation
+TEE-based blockchains use TEEs in four key ways:
 
-## Examples
+- **TEE-Based Smart Contracts** – TEEs execute smart contracts securely, ensuring that sensitive data remains confidential.
+- **TEE-Based Consensus Protocols** – TEEs streamline and scale consensus processes, sometimes by providing a secure leader election mechanism.
+- **TEE-Based Layer 2 (L2) Solutions** – TEEs implement private L2 solutions, enabling performance and functionality beyond the capabilities of L1.
+- **TEE-Based Applications** – TEEs secure interactions with blockchain applications, including key management and secure data retrieval.
 
-Here are a few examples of Alembic out in the wild being used in a variety of ways:
+Explore more about these approaches [here](/tee_blockchains/).
 
-- [bawejakunal.github.io](https://bawejakunal.github.io/)
-- [case2111.github.io](https://case2111.github.io/)
-- [karateca.org](https://www.karateca.org/)
 
-## Installation
 
-### Quick setup
 
-To give you a running start I've put together some starter kits that you can download, fork or even deploy immediately:
 
-- ⚗️🍨 Vanilla Jekyll starter kit  
-  [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/daviddarnes/alembic-kit){:style="background: none"}
-- ⚗️🌲 Forestry starter kit  
-  [![Deploy to Forestry](https://assets.forestry.io/import-to-forestry.svg)](https://app.forestry.io/quick-start?repo=daviddarnes/alembic-forestry-kit&engine=jekyll){:style="background: none"}  
-  [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/daviddarnes/alembic-forestry-kit){:style="background: none"}
-- ⚗️💠 Netlify CMS starter kit  
-  [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/daviddarnes/alembic-netlifycms-kit&stack=cms){:style="background: none"}
+### Forking Attacks against TEEs
 
-- ⚗️:octocat: GitHub Pages with remote theme kit  
-  {% include button.html text="Download kit" link="https://github.com/daviddarnes/alembic-kit/archive/remote-theme.zip" color="#24292e" %}
-- ⚗️🚀 Stackbit starter kit  
-  [![Create with Stackbit](https://assets.stackbit.com/badge/create-with-stackbit.svg)](https://app.stackbit.com/create?theme=https://github.com/daviddarnes/alembic-stackbit-kit){:style="background: none"}
+While TEEs add a layer of security, they are vulnerable to forking attacks, which exploit limitations in TEE functionality. The two types of forking attack are:
 
-### As a Jekyll theme
+- **Rollback Attacks** – Attackers exploit the lack of "freshness" in TEE-sealed data, restarting the enclave with an outdated sealed state to reverse previous updates.
+- **Cloning Attacks** – Attackers start multiple instances of the same enclave application with different input sets, causing inconsistencies in state.
 
-1. Add `gem "alembic-jekyll-theme"` to your `Gemfile` to add the theme as a dependancy
-2. Run the command `bundle install` in the root of project to install the theme and its dependancies
-3. Add `theme: alembic-jekyll-theme` to your `_config.yml` file to set the site theme
-4. Run `bundle exec jekyll serve` to build and serve your site
-5. Done! Use the [configuration](#configuration) documentation and the example [`_config.yml`](https://github.com/daviddarnes/alembic/blob/master/_config.yml) file to set things like the navigation, contact form and social sharing buttons
+These forking attacks can compromise the consistency guarantees of TEEs, requiring additional mechanisms to prevent such attacks.
 
-### As a GitHub Pages remote theme
 
-1. Add `gem "jekyll-remote-theme"` to your `Gemfile` to add the theme as a dependancy
-2. Run the command `bundle install` in the root of project to install the jekyll remote theme gem as a dependancy
-3. Add `jekyll-remote-theme` to the list of `plugins` in your `_config.yml` file
-4. Add `remote_theme: daviddarnes/alembic@main` to your `_config.yml` file to set the site theme
-5. Run `bundle exec jekyll serve` to build and serve your site
-6. Done! Use the [configuration](#configuration) documentation and the example [`_config.yml`](https://github.com/daviddarnes/alembic/blob/master/_config.yml) file to set things like the navigation, contact form and social sharing buttons
 
-### As a Boilerplate / Fork
 
-_(deprecated, not recommended)_
 
-1. [Fork the repo](https://github.com/daviddarnes/alembic#fork-destination-box)
-2. Replace the `Gemfile` with one stating all the gems used in your project
-3. Delete the following unnecessary files/folders: `.github`, `LICENSE`, `screenshot.png`, `CNAME` and `alembic-jekyll-theme.gemspec`
-4. Run the command `bundle install` in the root of project to install the jekyll remote theme gem as a dependancy
-5. Run `bundle exec jekyll serve` to build and serve your site
-6. Done! Use the [configuration](#configuration) documentation and the example [`_config.yml`](https://github.com/daviddarnes/alembic/blob/master/_config.yml) file to set things like the navigation, contact form and social sharing buttons
+### How TEE-based Blockchains Prevent Forking Attacks
 
-## Customising
+Consensus protocols, especially in blockchains, are designed to ensure a total ordering of events, meaning every transaction and state update is recorded in a consistent sequence across all nodes. Due to this characteristic, TEE-based applications can naturally rely on blockchains to counter forking attacks.
 
-When using Alembic as a theme means you can take advantage of the file overriding method. This allows you to overwrite any file in this theme with your own custom file, by matching the file name and path. The most common example of this would be if you want to add your own styles or change the core style settings.
+But let's see how TEE-based blockchains acutally handle this "mariage". Here is an overview of strategies in SGX-based blockchains that (can) prevent forking attacks against the enclave and their pitfalls.
 
-To add your own styles copy the [`styles.scss`](https://github.com/daviddarnes/alembic/blob/master/assets/styles.scss) into your own project with the same file path (`assets/styles.scss`). From there you can add your own styles, you can even optionally ignore the theme styles by removing the `@import "alembic";` line.
+#### Stateless Enclaves
 
-If you're looking to set your own colours and fonts you can overwrite them by matching the variable names from the [`_settings.scss`](https://github.com/daviddarnes/alembic/blob/master/_sass/_settings.scss) file in your own `styles.scss`, make sure to state them before the `@import "alembic";` line so they take effect. The settings are a mixture of custom variables and settings from [Sassline](https://medium.com/@jakegiltsoff/sassline-v2-0-e424b2881e7e) - follow the link to find out how to configure the typographic settings.
+Stateless enclaves, as the name implies, doperate without storing previous computation states. Each time a stateless enclave is restarted, it generates output based solely on the current input without accessing any previously sealed state. This design naturally prevents rollback attacks, as there is no historical state that can be reverted to. However, it introduces two primary limitations: (1) stateless enclaves clearly restricts the type of applications that can be deployed since they do not support persistent state storage., and (2) they remain vulnerable to cloning attacks. For instance, if a randomized computation is performed, an adversary can launch multiple clones and selectively forward the most favorable result.
+
+<div class="boxed">
+<b>Takeaway 1 - Stateless Enclaves.</b> 
+Using enclaves that do not keep a persistent state protects against rollback attacks by design. However, stateless enclaves limit the expressiveness of the TEE application and do not deter cloning attacks when the TEE application is non-deterministic.
+</div>
+
+
+<p></p>
+
+#### Ephemeral Identities
+
+In TEE-based blockchains, enclaves typically have unique identities that help maintain security and trustworthiness in the network. Most TEE-based blockchains rely on long-lasting identities for enclaves. In this model, each enclave is identified by a unique public key. To ensure persistence, the key pair is securely sealed to disk, allowing the enclave to retain its identity even after a restart. Other TEE-based blockchains use ephemeral identities, where the enclave generates a fresh  key pair upon restart and uses the public key as an identifier. This approach helps to deter cloning attacks by enabling a clear distinction between multiple enclave instances. If the application logic cannot tolerate multiple enclave instances, effective key management is essential to track legitimate enclave instances. While ephemeral identities are effective in distinguishing enclave instances and deterring cloning, they do not prevent rollback attacks.
+
+<div class="boxed">
+<b>Takeaway 2 - Ephemeral Identities.</b> 
+Identifying each enclave by means of an ephemeral ID (i.e., renewed at restart) can prevent cloning attacks. In settings where the state needs to persist, one should additionally rely on antirollback mechanisms.
+</div>
+
+
+<p></p>
+
+#### A Fixed Set of Clients
+
+Some TEE-based blockchains enforce restricted access to smart contracts by allowing only a fixed set of trusted clients to interact with the enclave. In this model, each client maintains a local representation of the system state. The clients exchange and compare their view with the enclave to detect inconsistencies. This shared state verification helps detect rollback attacks, but the system remains vulnerable to cloning attacks. An adversary could launch multiple clones of the enclave, each running the same randomized computations independently, and select the most favorable result. This method has limitations related to fault tolerance and reconfiguration. Managing offline or malicious clients and allowing for new or departing clients can be challenging and resource-intensive.
+
+<div class="boxed">
+<b>Takeaway 3 - Fixed Set of Clients.</b> 
+Relying on a fixed and mutually trusted set of smart contract clients can prevent rollback attacks; however, it cannot prevent cloning attacks if the enclave is non-deterministic.
+</div>
+
+
+<p></p>
+
+#### Serializing State
+
+State serialization methods rely on the blockchain’s ordering layer to secure and organize enclave states. This approach has three primary techniques, which can also be combined:
+
+- **Transaction replay from the ledger:** Instead of using local sealing, the enclave rebuilds state by replaying all past transactions from the blockchain. This can prevent rollback attacks if the entire transaction history is retrieved, and protect against cloning if blockchain forking is prevented.
+- **Timestamping:** Here, the enclave relies on sealed states but includes metadata like block height and hash as an indicator which blocks are included in the state. By incorporating this metadata as a timestamp, the requesting client can validate the state’s freshness.
+- **Storing state in the blockchain:** In this variant, the enclave periodically seals its state (or a state representation) on the blockchain by writing hashes of input and output states. Here, the consistent layer can check that the new state naturally evolves from the latest stored state. This can deter rollback and cloning attacks by anchoring state changes to the blockchain’s consistent layer.
+
+
+While state serialization offers strong protection, it is limited by the underlying Layer 1 (L1) blockchain’s capabilities. Throughput cannot exceed that of the L1, which may limit update frequency. Additionally, permissionless blockchains like Ethereum and Bitcoin provide only eventual consistency, which can weaken these protections in the event of blockchain forks. For full functionality, the enclave must receive complete blockchain history by either directly participating in consensus or connecting to an honest blockchain node which are not trivial to solve. Furthermore, state serialization requires measures to handle randomized computations, as adversaries can still launch clones to achieve favorable outcomes.
+
+<div class="boxed">
+<b>Takeaway 4 - Serializing State.</b> 
+Serializing the enclave output using a consistent layer (e.g., the consensus layer of blockchains) can prevent rollback and cloning attacks. However, it needs to be combined with ephemeral IDs to prevent cloning attacks when the TEE computations are
+non-deterministic.
+</div>
+
+
+
+
+
+<p></p>
+
+### Forking TEE-based Blockchains in the Wild
+
+We demonstrate the impact of forking attacks against the enclave in TEE-based blockchains with three case studies. For our case studies, we chose three (almost) production-ready systems: [Phala](https://phala.network/), [Ten](https://ten.xyz/), and [Secret Network](https://scrt.network/).
+
+
+
+
+
+### Authors
+
+[Annika Wilde](https://informatik.rub.de/infsec/people/wilde/)\
+Tim Niklas Gruel\
+Claudio Soriente\
+[Ghassan Karame](https://ghassankarame.com/?i=1)
+
+
+
+
+
+### Responsible Disclosure
+We responsibly disclosed our findings on July 10, 2024 to Phala, Ten and the Secret Network, and suggested countermeasures to the developers of these production-ready TEE-based blockchains, respectively.

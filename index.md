@@ -4,8 +4,9 @@ feature_text: |
   # The Forking Way
   ### When TEE meets Consensus
 excerpt: "Overview of forking attacks against TEE-based blockchains"
-aside: false
+aside: true
 paperlink: true
+sidebar: "index"
 ---
 
 ### What are TEE-based Blokchains?

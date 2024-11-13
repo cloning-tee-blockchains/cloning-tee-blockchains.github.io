@@ -4,7 +4,8 @@ feature_text: |
   # Case Studies
   ### Forking TEE-based Blockchains in the Wild
 excerpt: "Case studies demonstrating the impact of forking attacks against TEE-based blockchains"
-aside: false
+aside: true
+sidebar: case_study
 ---
 
 
@@ -18,6 +19,8 @@ Phala utilizes the Authority-round (Aura) consensus algorithm, where leaders are
 
 As each smart contract is only executed by one enclave, Phala’s worker nodes use a heartbeat mechanism to maintain regular updates. As part of this process, worker enclave's compute a function of blockchain metadata and their public key to determine whether or not to issue heartbeat. This function is designed such that each block contains approximately 20 heartbeats, enabling efficient verification of the heartbeats through Gatekeepers. 
 
+<a id="cloning-attack-on-contract-queries-phala"></a>
+
 #### Cloning Attack on Contract Queries
 
 While heartbeats contain the block height (and, as such, could be used for timestamping), enclaves do not check whether they receive regular heartbeats (or acknowledgments) from others. This check is only done by the Gatekeeper, which allows enclaves to be cloned and even isolated from the rest of the network.
@@ -28,6 +31,7 @@ However, an adversary could clone the enclave and disable the *pherry relayer* c
 
 ![Overview of the cloning attack against Phala Worker enclaves.](/assets/figures/attack_phala.png "Sketch of the cloning attack on Phala. A malicious worker clones the enclave running the smart contract. It then prevents the clone from receiving state updates and answers contract queries with an outdated state.")
 
+<a id="suggested-countermeasure-phala"></a>
 
 #### Suggested Countermeasure
 
@@ -35,6 +39,7 @@ Phala’s heartbeat mechanism presents a valuable opportunity to add a timestamp
 
 Additionally, we recommend that enclaves include the latest block height as a timestamp in their responses to all contract queries. This approach shifts some responsibility to the requesting client, who would need to verify that the output matches the latest state and is, therefore, valid.
 
+<a id="responsible-disclosure-phala"></a>
 
 #### Responsible Disclosure
 
@@ -45,6 +50,9 @@ On July 10, 2024, we responsibly disclosed our findings to Phala and provided th
 ### Secret Network
 
 The [Secret Network](https://scrt.network/) (SN) is a Layer 1 blockchain built on the Cosmos SDK. In SN, each node leverages a TEE to securely execute smart contracts. When a transaction is sent to invoke a smart contract, it’s encrypted using a public key shared across the network, allowing any SN enclave to decrypt and process it. Once selected for inclusion in the next block, the transaction is decrypted, executed within the enclave, and its output is re-encrypted with the sender's public key before being added to the blockchain. To facilitate quick and gas-free access to contract state, SN enclaves offer an HTTP endpoint that clients can use to directly query smart contract data.
+
+
+<a id="cloning-attack-on-contract-queries-secret"></a>
 
 #### Cloning Attack on Contract Queries
 
@@ -57,11 +65,15 @@ In this scenario, if a client issues a query to the smart contract at address *a
 ![Overview of the cloning attack against a Secret Network enclave.](/assets/figures/attack_secret.png "Sketch of the cloning attack on the Secret Network. A malicious Proxy PM in the network changes the contract address in the client’s query to return the state of a different instance with the same code.")
 
 
+<a id="suggested-countermeasure-secret"></a>
+
 #### Suggested Countermeasure
 
 In the Secret Network (SN), each smart contract is assigned an instance-specific ID (contract address). In other words, two contract clones (same binary, same machine) will get different IDs, similar to ephemeral IDs. However, this ID is not bound to the messages exchanged with clients. By cryptographically binding the contract ID to the query, the enclave could verify it is the intended receiver.
 
 However, this solution alone does not mitigate rollback attacks. [Jean-Louis et al.](https://eprint.iacr.org/2023/378.pdf) suggest implementing a proof-of-publication to ensure that transactions are securely committed and ordered on-chain before execution, which effectively serializes transactions. Another potential solution would be to use TEEs to maintain a secure record of the active TEEs and their ephemeral IDs within the network.
+
+<a id="responsible-disclosure-secret"></a>
 
 #### Responsible Disclosure
 
@@ -83,9 +95,13 @@ The attack unfolds as follows: the adversary starts a Ten enclave that completes
 
 ![Overview of the cloning attack against a Ten enclave.](/assets/figures/attack_ten.png "Sketch of the cloning attack on Ten. An adversary increases the chances of proposing the next block by running two enclave clones and choosing the output with the lowest nonce.")
 
+<a id="suggested-countermeasure-ten"></a>
+
 #### Suggested Countermeasure
 
 Ten implements stateful enclaves, incorporating a rollback detection mechanism by serializing state by means of the block hash. If a stale block hash is used, the L1 layer will reject the enclave's commit request. However, preventing cloning attacks in such stateful solutions requires the incorporation of additional mechanisms. An effective anti-cloning mechanism in this particular case would be to use enclave-specific ephemeral identities. In particular, the L1 contract handling rollups can be easily modified to keep track of the (ephemeral) identities of the TEE enclaves.
+
+<a id="responsible-disclosure-ten"></a>
 
 #### Responsible Disclosure
 

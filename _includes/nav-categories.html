@@ -1,9 +1,115 @@
-<nav class="nav  nav--categories">
+<!--nav class="nav  nav--categories">
   <ul class="list  list--categories">
-    {% for item in site.categories %}
+    {% for item in page.toc %}
+      test text
       <li class="item  item--category">
         <a href="#{{ item | first | slugify }}">{{ item | first }}</a>
       </li>
     {% endfor %}
   </ul>
+</nav-->
+
+{% if page.sidebar == "index" %}
+<nav class="nav  nav--categories">
+  <ul class="list  list--categories">
+    <li class="item  item--category">
+      <a href="#what-are-tee-based-blockchains">What are TEE-based Blockchains?</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#forking-attacks-against-tees">Forking Attacks against TEEs</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#how-tee-based-blockchains-prevent-forking-attacks">How TEE-based Blockchains Prevent Forking Attacks</a>
+      <ul class="list list--categories">
+        <li class="item  item--category">
+          <a href="#stateless-enclaves">Stateless Enclaves</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#ephemeral-identities">Ephemeral Identities</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#a-fixed-set-of-clients">A fixed Set of Clients</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#serializing-state">Serializing State</a>
+        </li>
+      </ul>
+    </li>
+    <li class="item  item--category">
+      <a href="#forking-tee-based-blockchains-in-the-wild">Forking TEE-based Blockchains in the Wild</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#responsible-disclosure">Responsible Disclosure</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#authors">Authors</a>
+    </li>
+  </ul>
 </nav>
+
+{% elsif page.sidebar == "tee_blockchains" %}
+<nav class="nav  nav--categories">
+  <ul class="list  list--categories">
+    <li class="item  item--category">
+      <a href="#tee-based-smart-contracts">TEE-based Smart Contracts</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#tee-based-consensus-protocols">TEE-based Consensus Protocols</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#tee-based-layer-2-solutions">TEE-based Layer 2 Solutions</a>
+    </li>
+    <li class="item  item--category">
+      <a href="#tee-based-blockchain-applications">TEE-based Blockchain Applications</a>
+    </li>
+  </ul>
+</nav>
+
+{% elsif page.sidebar == "case_study" %}
+<nav class="nav  nav--categories">
+  <ul class="list  list--categories">
+    <li class="item  item--category">
+      <a href="#phala">Phala</a>
+      <ul class="list list--categories">
+        <li class="item  item--category">
+          <a href="#cloning-attack-on-contract-queries-phala">Cloning Attack on Contract Queries</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#suggested-countermeasure-phala">Suggested Countermeasures</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#responsible-disclosure-phala">Responsible Disclosure</a>
+        </li>
+      </ul>
+    </li>
+    <li class="item  item--category">
+      <a href="#secret-network">Secret Network</a>
+      <ul class="list list--categories">
+        <li class="item  item--category">
+          <a href="#cloning-attack-on-contract-queries-secret">Cloning Attack on Contract Queries</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#suggested-countermeasure-secret">Suggested Countermeasures</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#responsible-disclosure-secret">Responsible Disclosure</a>
+        </li>
+      </ul>
+    </li>
+    <li class="item  item--category">
+      <a href="#ten">Ten</a>
+      <ul class="list list--categories">
+        <li class="item  item--category">
+          <a href="#cloning-attack-on-block-generation">Cloning Attack on Block Generation</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#suggested-countermeasure-ten">Suggested Countermeasures</a>
+        </li>
+        <li class="item  item--category">
+          <a href="#responsible-disclosure-ten">Responsible Disclosure</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+{% endif %}

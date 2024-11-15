@@ -113,8 +113,8 @@ navigation_header:
   url: /search/
 
 navigation_footer:
-- title: Chair for Information Security, Ruhr University Bochum
-  url: https://informatik.rub.de/infsec/
+# - title: Chair for Information Security, Ruhr University Bochum
+#   url: https://informatik.rub.de/infsec/
 # - title: Imprint
 #   url: /imprint/
 

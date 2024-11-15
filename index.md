@@ -1,8 +1,7 @@
 ---
 title: The Forking Way
 feature_text: |
-  # The Forking Way
-  ### When TEE meets Consensus
+  # The Forking Way: When TEEs meet Consensus
 excerpt: "Overview of forking attacks against TEE-based blockchains"
 aside: true
 paperlink: true
@@ -102,6 +101,323 @@ non-deterministic.
 </div>
 
 
+<p></p>
+
+#### Mitigation Distribution
+
+The following table shows an excerpt of our analysis of 29 TEE-based blockchains. We previously described that [TEE-based blockchains use TEEs in four key ways](#what-are-tee-based-blokchains): for TEE-based smart contracts, consensus protocols, L2 solutions, and applications. Let's see how the mitigation strategies are adopted across these system categories:
+
+- **Stateless enclaves** are employed by platforms in all four categories.
+- **Ephemeral identities** are primarily used by TEE-based Layer 2 solutions to counter cloning attacks. Specifically, five out of 13 platforms in this category utilize ephemeral IDs. In contrast, none of the TEE-based smart contracts uses ephemeral identities.
+- **A fixed set of clients** is a technique exclusively employed by TEE-based L2 solutions.
+- **State serialization** techniques are utilized across all four system categories. TEE-based smart contracts mostly rely on transaction replay and timestamping, whereas TEE-based consensus protocols and L2 solutions more commonly store their states on the ledger. Many TEE-based blockchain applications use timestamping. Lastly, no TEE-based consensus protocol replays transactions to recover state information, and no enclave in a blockchain application stores its state on the ledger.
+
+If you are interested in a more thorough evaluation of our results, we encourage you to take a closer look into our [paper]().
+
+<p></p>
+
+<style>
+table, th, td {
+  border:1px solid black;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+th {
+  background-color: #F2F2F2;
+}
+.centercol {
+  text-align: center;
+}
+</style>
+
+<div>
+<table style="width:100%">
+  <tr>
+    <th><strong>Project</strong></th>
+    <th class="centercol"><strong>Stateless enclaves</strong></th>
+    <th class="centercol"><strong>Ephemeral IDs</strong></th>
+    <th class="centercol"><strong>Fixed set</strong></th>
+    <th class="centercol"><strong>Transaction replay</strong></th>
+    <th class="centercol"><strong>Time- stamp</strong></th>
+    <th class="centercol"><strong>State on the ledger</strong></th>
+  </tr>
+  <tr>
+    <td class="centercol" colspan="7" style="background-color: #F2F2F2"><strong>TEE-based Smart Contracts</strong></td>
+  </tr>
+  <tr>
+    <td>Azure CCF</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>CONFIDE</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>CreDB</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Ekiden</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>Phala</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Secret Network</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td class="centercol" colspan="7" style="background-color: #F2F2F2"><strong>TEE-based Consensus Protocols</strong></td>
+  </tr>
+  <tr>
+    <td>Crust sWorker</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>ENGRAFT</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>MobileCoin</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Proof of Luck</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>REM</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td  class="centercol" colspan="7" style="background-color: #F2F2F2"><strong>TEE-based Layer 2 Solutions</strong></td>
+  </tr>
+  <tr>
+    <td>COMMITEE</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>FastKitten</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Hybridchain</td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>IntegriTEE</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>Obscuro Mixer</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>PrivacyGuard</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Private Chaincode</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>Private Data Objects</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>ShadowEth</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>Teechain</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Ten</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+  </tr>
+  <tr>
+    <td>Tesseract</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Twilight</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td  class="centercol" colspan="7" style="background-color: #F2F2F2"><strong>TEE-based Blockchain Applications</strong></td>
+  </tr>
+  <tr>
+    <td>BITE</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>LSKV</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>sgxwallet</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Ternoa Network</td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+  <tr>
+    <td>Town Crier</td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol"></td>
+    <td class="centercol">&#10004;</td>
+    <td class="centercol"></td>
+  </tr>
+</table>
+</div>
+
+
 
 
 
@@ -109,11 +425,11 @@ non-deterministic.
 
 ### Forking TEE-based Blockchains in the Wild
 
-We demonstrate the impact of forking attacks against the enclave in TEE-based blockchains with three case studies. For our case studies, we chose three (almost) production-ready systems: [Phala](https://phala.network/), [Ten](https://ten.xyz/), and [Secret Network](https://scrt.network/).
+We demonstrate the impact of forking attacks against the enclave in TEE-based blockchains with three case studies. For our case studies, we chose three (almost) production-ready systems: Phala, Ten, and the Secret Network.
 
-- **Phala:** Phala is an L1 blockchain leveraging TEEs for off-chain confidential smart contract execution. By cloning the enclave, an adversary can isolate the cloned instance from the network and provide rogue responses to contract queries.
-- **Secret Network:** The Secret Network is an L1 blockchain leveraging TEEs to securely execute smart contracts. By cloning the smart contract, an adversary can return incorrect data in response to contract queries from clients.
-- **Ten:** Ten is an L2 solution leveraging TEEs to provide transaction confidentiality. By cloning the enclave, an adversary can artificially increase their chances to propose the next rollup, breaking fairness guarantees.
+- **[Phala](/case_studies#phala)**  is an L1 blockchain leveraging TEEs for off-chain confidential smart contract execution. By cloning the enclave, an adversary can isolate the cloned instance from the network and provide rogue responses to contract queries.
+- **[Secret Network](/case_studies#secret-network)** is an L1 blockchain leveraging TEEs to securely execute smart contracts. By cloning the smart contract, an adversary can return incorrect data in response to contract queries from clients.
+- **[Ten](/case_studies#ten)** is an L2 solution leveraging TEEs to provide transaction confidentiality. By cloning the enclave, an adversary can artificially increase their chances to propose the next rollup, breaking fairness guarantees.
 
 
 Explore the details of these three attacks [here](/case_studies/).
@@ -131,7 +447,9 @@ We responsibly disclosed our findings on July 10, 2024 to Phala, Ten and the Sec
 
 ### Authors
 
+You can find full details on our study about the use of TEEs in the context of blockchains in our NDSS 2025 paper which is available [here]().
+
 [Annika Wilde](https://informatik.rub.de/infsec/people/wilde/)\
-Tim Niklas Gruel\
+[Tim Niklas Gruel](https://www.timniklasgruel.com/)\
 Claudio Soriente\
 [Ghassan Karame](https://ghassankarame.com/?i=1)

@@ -29,13 +29,20 @@ Phala contract queries are encrypted with a temporary symmetric key, which inclu
 
 However, an adversary could clone the enclave and disable the *pherry relayer* connecting it to the blockchain, isolating this clone. Without transaction *tx*, the isolated clone retains *False* as its state. If a client sends a query to the smart contract at address *a* (step 1 in the figure below), the adversary could forward the request to the isolated clone (step 2), which decrypts the query and responds with *False* (step 3), thus delivering outdated information.
 
-![Overview of the cloning attack against Phala Worker enclaves.](/assets/figures/attack_phala.png "Sketch of the cloning attack on Phala. A malicious worker clones the enclave running the smart contract. It then prevents the clone from receiving state updates and answers contract queries with an outdated state.")
+<img src="/assets/figures/attack_phala.svg" alt="Overview of the cloning attack on on Phala. A malicious worker clones the enclave running the smart contract. It then prevents the clone from receiving state updates and answers contract queries with an outdated state." style="display: block; margin-left: auto; margin-right: auto; width: 75%;"/>
+
+<!--object data="/assets/figures/attack_phala.pdf" type="application/pdf" width="80%">
+    <embed src="/assets/figures/attack_phala.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="/assets/figures/attack_phala.pdf">Download PDF</a>.</p>
+    </embed>
+</object-->
+
 
 <a id="suggested-countermeasure-phala"></a>
 
 #### Suggested Countermeasure
 
-Phala’s heartbeat mechanism presents a valuable opportunity to add a timestamping feature that could help enclaves to self-detect forking attacks. By leveraging heartbeats, all enclaves could stay synchronized with the current block height, reflecting the most recent state. Our suggestion is to have enclaves exchange these heartbeats over a dedicated peer-to-peer (P2P) network, ensuring they regularly receive heartbeat messages from others and can detect if they become isolated.
+Phala’s heartbeat mechanism presents a valuable opportunity to add a [timestamping](/#serializing-state) feature that could help enclaves to self-detect forking attacks. By leveraging heartbeats, all enclaves could stay synchronized with the current block height, reflecting the most recent state. Our suggestion is to have enclaves exchange these heartbeats over a dedicated peer-to-peer (P2P) network, ensuring they regularly receive heartbeat messages from others and can detect if they become isolated.
 
 Additionally, we recommend that enclaves include the latest block height as a timestamp in their responses to all contract queries. This approach shifts some responsibility to the requesting client, who would need to verify that the output matches the latest state and is, therefore, valid.
 
@@ -62,16 +69,17 @@ Consider a smart contract with address *a* stores a counter variable initially s
 
 In this scenario, if a client issues a query to the smart contract at address *a'* (step 1 in the figure below), the adversary could intercept the HTTP request (step 2) and change the address to *a'* (step 3). Consequently, the query would be processed by the cloned contract at *a'*, which decrypts the query and responds with *x* (step 4), resulting in incorrect data being returned to the client.
 
-![Overview of the cloning attack against a Secret Network enclave.](/assets/figures/attack_secret.png "Sketch of the cloning attack on the Secret Network. A malicious Proxy PM in the network changes the contract address in the client’s query to return the state of a different instance with the same code.")
+<img src="/assets/figures/attack_secret.svg" alt="Overview of the cloning attack on the Secret Network. A malicious Proxy PM in the network changes the contract address in the client’s query to return the state of a different instance with the same code." style="display: block; margin-left: auto; margin-right: auto; width: 75%;"/>
+
 
 
 <a id="suggested-countermeasure-secret"></a>
 
 #### Suggested Countermeasure
 
-In the Secret Network (SN), each smart contract is assigned an instance-specific ID (contract address). In other words, two contract clones (same binary, same machine) will get different IDs, similar to ephemeral IDs. However, this ID is not bound to the messages exchanged with clients. By cryptographically binding the contract ID to the query, the enclave could verify it is the intended receiver.
+In the Secret Network (SN), each smart contract is assigned an instance-specific ID (contract address). In other words, two contract clones (same binary, same machine) will get different IDs, similar to [ephemeral IDs](/#ephemeral-identities). However, this ID is not bound to the messages exchanged with clients. By cryptographically binding the contract ID to the query, the enclave could verify it is the intended receiver.
 
-However, this solution alone does not mitigate rollback attacks. [Jean-Louis et al.](https://eprint.iacr.org/2023/378.pdf) suggest implementing a proof-of-publication to ensure that transactions are securely committed and ordered on-chain before execution, which effectively serializes transactions. Another potential solution would be to use TEEs to maintain a secure record of the active TEEs and their ephemeral IDs within the network.
+However, this solution alone does not mitigate rollback attacks. [Jean-Louis et al.](https://eprint.iacr.org/2023/378.pdf) suggest implementing a proof-of-publication to ensure that transactions are securely committed and ordered on-chain before execution, which effectively [serializes transactions](/#serializing-state). Another potential solution would be to use TEEs to maintain a secure record of the active TEEs and their ephemeral IDs within the network.
 
 <a id="responsible-disclosure-secret"></a>
 
@@ -93,13 +101,14 @@ While Ten’s architecture is designed to resist rollback attacks, its POBI cons
 
 The attack unfolds as follows: the adversary starts a Ten enclave that completes enrollmen and seals its cryptographic keys to disk. Then, the adversary clones enclave on the same machine, allowing both enclave instances to access to the sealed state. When a new block is received from an L1 node (step 1 in the figure below), the adversary feeds it to both clones (step 2). Each enclave generates a random nonce, *N* and *N'*, respectively, and includes it in the rollup proposal (step 3). The adversary then selects the rollup with the lowest nonce and submits it to the L1 layer (step 4). This cloning attack allows the adversary to artificially increase their chances of achieving the lowest nonce.
 
-![Overview of the cloning attack against a Ten enclave.](/assets/figures/attack_ten.png "Sketch of the cloning attack on Ten. An adversary increases the chances of proposing the next block by running two enclave clones and choosing the output with the lowest nonce.")
+<img src="/assets/figures/attack_ten.svg" alt="Overview of the cloning attack on on Ten. An adversary increases the chances of proposing the next block by running two enclave clones and choosing the output with the lowest nonce." style="display: block; margin-left: auto; margin-right: auto; width: 75%;"/>
+
 
 <a id="suggested-countermeasure-ten"></a>
 
 #### Suggested Countermeasure
 
-Ten implements stateful enclaves, incorporating a rollback detection mechanism by serializing state by means of the block hash. If a stale block hash is used, the L1 layer will reject the enclave's commit request. However, preventing cloning attacks in such stateful solutions requires the incorporation of additional mechanisms. An effective anti-cloning mechanism in this particular case would be to use enclave-specific ephemeral identities. In particular, the L1 contract handling rollups can be easily modified to keep track of the (ephemeral) identities of the TEE enclaves.
+Ten implements stateful enclaves, incorporating a rollback detection mechanism by serializing state by means of the block hash. If a stale block hash is used, the L1 layer will reject the enclave's commit request. However, preventing cloning attacks in such stateful solutions requires the incorporation of additional mechanisms. An effective anti-cloning mechanism in this particular case would be to use enclave-specific [ephemeral identities](/#ephemeral-identities). In particular, the L1 contract handling rollups can be easily modified to keep track of the (ephemeral) identities of the TEE enclaves.
 
 <a id="responsible-disclosure-ten"></a>
 

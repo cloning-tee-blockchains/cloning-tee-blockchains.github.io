@@ -447,7 +447,7 @@ We responsibly disclosed our findings on July 10, 2024 to Phala, Ten and the Sec
 
 ### Authors
 
-You can find full details on our study about the use of TEEs in the context of blockchains in our NDSS 2025 paper which is available [here]().
+You can find full details on our study about the use of TEEs in the context of blockchains in our NDSS 2025 paper which is available [here](https://arxiv.org/pdf/2412.00706).
 
 [Annika Wilde](https://informatik.rub.de/infsec/people/wilde/)\
 [Tim Niklas Gruel](https://www.timniklasgruel.com/)\

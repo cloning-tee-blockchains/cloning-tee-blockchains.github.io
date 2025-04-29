@@ -50,7 +50,7 @@ Additionally, we recommend that enclaves include the latest block height as a ti
 
 #### Responsible Disclosure
 
-On July 10, 2024, we responsibly disclosed our findings to Phala and suggested countermeasures to its developers. Phala has acknowledged the reported vulnerability and published a [blog post](https://phala.network/posts/worker-node-cloning-attacks) detailing their planned mitigation steps based on our recommendations in the paper. They are currently working on implementing the recommended fixes. Once the update is released, we will provide an update that includes the fixed version.
+On July 10, 2024, we responsibly disclosed our findings to Phala and suggested countermeasures to its developers. On April 13, 2025, Phala has acknowledged the reported vulnerability and published a [blog post](https://phala.network/posts/worker-node-cloning-attacks) detailing their planned mitigation steps based on our recommendations in the paper. They are currently working on implementing the recommended fixes. Once the update is released, we will provide an update that includes the fixed version.
 
 ---
 
@@ -85,7 +85,7 @@ However, this solution alone does not mitigate rollback attacks. [Jean-Louis et 
 
 #### Responsible Disclosure
 
-On July 10, 2024, we responsibly disclosed our findings to the Secret Network and suggested countermeasures to its developers. The Secret Network has acknowledged the reported vulnerability. They are currently working on implementing the mitigations based on our recommendations. Once the update is released, we will provide an update that includes the fixed version.
+On July 10, 2024, we responsibly disclosed our findings to the Secret Network and suggested countermeasures to its developers. On April 28, 2025, the Secret Network has acknowledged the reported vulnerability. They are currently working on implementing the mitigations based on our recommendations. Once the update is released, we will provide an update that includes the fixed version.
 
 ---
 
@@ -114,4 +114,4 @@ Ten implements stateful enclaves, incorporating a rollback detection mechanism b
 
 #### Responsible Disclosure
 
-On July 10, 2024, we responsibly disclosed our findings to Ten and suggested countermeasures to the developers. Ten has acknowledged the vulnerability as a potential attack vector and indicated that they will take steps to address the issue based on our recommendations.
+On July 10, 2024, we responsibly disclosed our findings to Ten and suggested countermeasures to the developers. On July 30, 2024, Ten has acknowledged the vulnerability as a potential attack vector and indicated that they will take steps to address the issue based on our recommendations.

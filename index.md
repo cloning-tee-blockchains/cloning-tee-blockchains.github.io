@@ -2,7 +2,7 @@
 title: The Forking Way
 feature_text: |
   # The Forking Way: When TEEs meet Consensus
-excerpt: "Overview of forking attacks against TEE-based blockchains"
+excerpt: "The NDSS'25 paper 'The Forking Way: When TEEs meet Consensus' systemizes TEE-based blockchains and how they mitigate forking attacks against the TEE, including rollback and cloning attacks."
 aside: true
 paperlink: true
 sidebar: "index"

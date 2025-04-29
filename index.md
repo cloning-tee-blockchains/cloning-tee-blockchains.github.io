@@ -441,9 +441,9 @@ Explore the details of these three attacks [here](/case_studies/).
 ### Responsible Disclosure
 
 On July 10, 2024, we responsibly disclosed our findings to Phala, Ten, and the Secret Network and suggested countermeasures to the developers of these production-ready TEE-based blockchains, respectively.
-- **Phala** has acknowledged the reported vulnerability and published a [blog post](https://phala.network/posts/worker-node-cloning-attacks) detailing their planned mitigation steps based on our recommendations in the paper. They are currently working on implementing the recommended fixes. Once the update is released, we will provide an update that includes the fixed version.
-- **Secret Network** has acknowledged the reported vulnerability. They are currently working on implementing the mitigations based on our recommendations. Once the update is released, we will provide an update that includes the fixed version.
-- **Ten** has acknowledged the vulnerability as a potential attack vector and indicated that they will take steps to address the issue based on our recommendations.
+- On April 13, 2025, **[Phala](/case_studies#phala)** has acknowledged the reported vulnerability and published a [blog post](https://phala.network/posts/worker-node-cloning-attacks) detailing their planned mitigation steps based on our recommendations in the paper. They are currently working on implementing the recommended fixes. Once the update is released, we will provide an update that includes the fixed version.
+- On April 28, 2025, **[Secret Network](/case_studies#secret-network)** has acknowledged the reported vulnerability. They are currently working on implementing the mitigations based on our recommendations. Once the update is released, we will provide an update that includes the fixed version.
+- On July 30, 2024, **[Ten](/case_studies#ten)** has acknowledged the vulnerability as a potential attack vector and indicated that they will take steps to address the issue based on our recommendations.
 
 
 
